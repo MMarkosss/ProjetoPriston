@@ -22,5 +22,8 @@ Console.WriteLine("Meta: Matar o primeiro hoppie");
 Console.Write("Qual seu mob favorito? ");
 string mobFavorito = Console.ReadLine();
 Console.WriteLine($"Você escolheu o mob favorito: {mobFavorito}");
+Console.WriteLine("Por que ele é seu mob favorito? ");
+string motivo = Console.ReadLine();
+Console.WriteLine($"Interessante! {motivo} é um bom motivo para gostar de {mobFavorito}.");
 Console.WriteLine("Pressione qualquer tecla para encerrar...");
 Console.ReadKey(true);
