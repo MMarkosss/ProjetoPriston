@@ -19,7 +19,7 @@ Console.WriteLine("A forja esta acesa. A jornada comeca agora.");
 Console.WriteLine();
 Console.WriteLine("Classe Favorita Selecionada: Pikeman");
 Console.WriteLine("Meta: Matar o primeiro hoppie");
-Console.Write("Qual seu mob favorito?:");
+Console.Write("Qual seu mob favorito? ");
 string mobFavorito = Console.ReadLine();
 Console.WriteLine($"Você escolheu o mob favorito: {mobFavorito}");
 Console.WriteLine("Pressione qualquer tecla para encerrar...");
