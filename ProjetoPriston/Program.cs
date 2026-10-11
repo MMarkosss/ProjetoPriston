@@ -90,4 +90,4 @@ Console.WriteLine($"Sorteio do critico : {sorteio}");
 Console.WriteLine($"Variação do dano : {variacao}");
 Console.WriteLine($"  Defesa do alvo:   {defesa}");
 Console.WriteLine($"  ─────────────────────");
-Console.WriteLine($"  Dano final:       {danoAposDefesa} de dano {categoriaDano} e foi um {criticoTexto}");
+Console.WriteLine($"  Dano final:       {danoFinal} de dano {categoriaDano} e foi um {criticoTexto}");
