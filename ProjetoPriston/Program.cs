@@ -58,6 +58,8 @@ if (danoAposDefesa < 0)
     danoAposDefesa = 0;   // defesa anulou TUDO o dano
 }
 
+danoAposDefesa = foiCritico ? danoAposDefesa * 2 : danoAposDefesa;   // crítico dobra o dano
+
 // --- Sorteio de variação aleatória (±10%) ---
 double variacao = Random.Shared.NextDouble() * 0.2 - 0.1;   // -0.1 a +0.1
 int danoFinal = (int)(danoAposDefesa * (1 + variacao));
