@@ -17,6 +17,8 @@ string classe = Console.ReadLine();
 
 
 // --- Dado numérico: ReadLine entrega TEXTO → precisa converter! ---
+Console.Write("Qual seu level?: ");
+bool levelValido = int.TryParse(Console.ReadLine(), out int level);
 Console.Write("STR (força): ");
 bool strValida = int.TryParse(Console.ReadLine(), out int str);
 Console.Write("SPR (Inteligência): ");
@@ -29,7 +31,7 @@ Console.Write("VIT (Vitalidade): ");
 bool vitValida = int.TryParse(Console.ReadLine(), out int vit);
 Console.Write("Vel. Atk: ");
 bool velAtkValida = double.TryParse(Console.ReadLine(), out double velAtk);
-Console.WriteLine("Quer começar em Ricarten? (s ou n ");
+Console.WriteLine("Quer começar em Ricarten? (s ou n) ");
 bool comecarEmRicarten = Console.ReadLine() == "s";
 
 // Constantes
@@ -38,8 +40,8 @@ const int MpPorSpr = 8;
 const int DanoPorStr = 2;
 
 var hpMax = vit * HpPorVit;
-int mpMax = spr * MpPorSpr;
-int danoBase = str * DanoPorStr;
+var mpMax = spr * MpPorSpr;
+var danoBase = str * DanoPorStr;
 
 // --- Exibição com interpolação ---
 Console.WriteLine();
