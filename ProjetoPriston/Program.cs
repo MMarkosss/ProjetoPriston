@@ -38,7 +38,7 @@ bool foiCritico = sorteio < chanceCritico;
 // --- Validação: TODOS os inputs precisam estar OK pra continuar ---
 if (!strOk || !levelOk || !defOk || !critOk)
 {
-    Console.WriteLine("❌ Entrada inválida — rode de novo com números.");
+    Console.WriteLine(" Entrada inválida — rode de novo com números.");
     return;   // encerra o programa aqui mesmo
 }
 
@@ -49,27 +49,34 @@ const int BônusPorLevel = 3;
 int danoBase = str * DanoPorStr + level * BônusPorLevel;
 
 
-// --- Redução por defesa (fórmula simples de subtração) ---
-int danoAposDefesa = danoBase - defesa;
 
-// HP não pode ficar negativo... e dano também não deveria!
-if (danoAposDefesa < 0)
-{
-    danoAposDefesa = 0;   // defesa anulou TUDO o dano
-}
+danoBase = foiCritico ? danoBase * 2 : danoBase;   // crítico dobra o dano
 
-danoAposDefesa = foiCritico ? danoAposDefesa * 2 : danoAposDefesa;   // crítico dobra o dano
 
 // --- Sorteio de variação aleatória (±10%) ---
 double variacao = Random.Shared.NextDouble() * 0.2 - 0.1;   // -0.1 a +0.1
-int danoFinal = (int)(danoAposDefesa * (1 + variacao));
+int danoFinal = (int)(danoBase * (1 + variacao));
 
-int golpesNecessarios = hpMonstro / danoFinal;    // cuidado com danoFinal == 0!
-if (danoFinal > 0 && hpMonstro % danoFinal != 0)
+// --- Redução por defesa (fórmula simples de subtração) ---
+danoFinal = danoBase - defesa;
+
+
+
+try
 {
-    golpesNecessarios++;   // sobrou HP? precisa de um golpe extra
+    int golpesNecessarios = hpMonstro / danoFinal;    // cuidado com danoFinal == 0!
+    if (danoFinal > 0 && hpMonstro % danoFinal != 0)
+    {
+        golpesNecessarios++;   // sobrou HP? precisa de um golpe extra
+    }
 }
-Console.WriteLine($"Golpes necessários: {golpesNecessarios}");
+catch (DivideByZeroException)
+{
+    Console.WriteLine(" Dano final é 0, impossível derrotar o monstro.");
+    return;   // encerra o programa aqui mesmo
+}
+
+
 
 // --- Classificação do resultado (else if em ação) ---
 string categoriaDano = danoFinal switch
@@ -77,7 +84,7 @@ string categoriaDano = danoFinal switch
     0 => "ANULADO",
     < 20 => "fraco",
     < 60 => "médio",
-    _ => "devastador 💀"
+    _ => "devastador "
 };
 
 string criticoTexto = foiCritico ? "CRÍTICO" : "Dano Normal";
@@ -86,8 +93,8 @@ string criticoTexto = foiCritico ? "CRÍTICO" : "Dano Normal";
 Console.WriteLine();
 Console.WriteLine("═══ RELATÓRIO ═══");
 Console.WriteLine($"  Dano base:        {danoBase}");
-Console.WriteLine($"Sorteio do critico : {sorteio}");
-Console.WriteLine($"Variação do dano : {variacao}");
-Console.WriteLine($"  Defesa do alvo:   {defesa}");
+Console.WriteLine($"Sorteio do critico : {sorteio*100} %");
+Console.WriteLine($"Variação do dano : {variacao*100} %");
+Console.WriteLine($"  Defesa do alvo:   {defesa} ");
 Console.WriteLine($"  ─────────────────────");
 Console.WriteLine($"  Dano final:       {danoFinal} de dano {categoriaDano} e foi um {criticoTexto}");
