@@ -14,7 +14,7 @@ public class Game1 : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
-        Window.Title = "Projeto Priston — Ricarten";
+        Window.Title = "Projeto Priston - Ricarten";
         _graphics.PreferredBackBufferWidth = 1024;
         _graphics.PreferredBackBufferHeight = 768;
     }
