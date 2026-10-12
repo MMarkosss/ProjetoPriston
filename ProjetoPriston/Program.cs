@@ -36,7 +36,7 @@ bool foiCritico = sorteio < chanceCritico;
 // ex: chance 0.25 → 25% das vezes o sorteio sai < 0.25 → true
 
 // --- Validação: TODOS os inputs precisam estar OK pra continuar ---
-if (!strOk || !levelOk || !defOk || !critOk)
+if (!strOk || !levelOk || !defOk || !critOk || !hpOk)
 {
     Console.WriteLine(" Entrada inválida — rode de novo com números.");
     return;   // encerra o programa aqui mesmo
@@ -55,26 +55,28 @@ danoBase = foiCritico ? danoBase * 2 : danoBase;   // crítico dobra o dano
 
 // --- Sorteio de variação aleatória (±10%) ---
 double variacao = Random.Shared.NextDouble() * 0.2 - 0.1;   // -0.1 a +0.1
-int danoFinal = (int)(danoBase * (1 + variacao));
+int danoComVariacao = (int)(danoBase * (1 + variacao));
 
 // --- Redução por defesa (fórmula simples de subtração) ---
-danoFinal = danoBase - defesa;
+int danoFinal = danoComVariacao - defesa;
+if (danoFinal < 0)
+    danoFinal = 0;   // defesa anulou tudo — sem dano negativo
 
 
-
+int golpesNecessarios = 0;   // nasce fora, acessível em todo o resto
 try
 {
-    int golpesNecessarios = hpMonstro / danoFinal;    // cuidado com danoFinal == 0!
+    golpesNecessarios = hpMonstro / danoFinal;
     if (danoFinal > 0 && hpMonstro % danoFinal != 0)
-    {
-        golpesNecessarios++;   // sobrou HP? precisa de um golpe extra
-    }
+        golpesNecessarios++;
 }
 catch (DivideByZeroException)
 {
     Console.WriteLine("Dano final é 0, impossível derrotar o monstro.");
-    return;   // encerra o programa aqui mesmo
+    return;
 }
+Console.WriteLine($"Golpes necessários: {golpesNecessarios}");  // ressuscitada
+
 
 
 
