@@ -22,7 +22,7 @@ Console.Write("Chance de crítico (percentual): ");
 bool critOk = double.TryParse(Console.ReadLine(), out double chanceCritico);
 
 Console.Write("HP do monstro: ");
-int hpMonstro = int.Parse(Console.ReadLine());   // parse direto, confia (bônus!)
+bool hpOk = int.TryParse(Console.ReadLine(), out int hpMonstro);
 
 
 
@@ -44,9 +44,9 @@ if (!strOk || !levelOk || !defOk || !critOk)
 
 // --- Cálculo base (constantes do jogo) ---
 const int DanoPorStr = 2;
-const int BônusPorLevel = 3;
+const int BonusPorLevel = 3;
 
-int danoBase = str * DanoPorStr + level * BônusPorLevel;
+int danoBase = str * DanoPorStr + level * BonusPorLevel;
 
 
 
@@ -72,7 +72,7 @@ try
 }
 catch (DivideByZeroException)
 {
-    Console.WriteLine(" Dano final é 0, impossível derrotar o monstro.");
+    Console.WriteLine("Dano final é 0, impossível derrotar o monstro.");
     return;   // encerra o programa aqui mesmo
 }
 
